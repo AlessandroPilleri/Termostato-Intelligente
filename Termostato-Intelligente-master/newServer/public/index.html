@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewpoint" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body bgcolor="#808080">
+        <div class="sticky">
+            <center><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 250%; color: white"><u>Pannello di controllo termostato</u></a></center>
+        </div>
+        <table id="ThermostatTable" align="center" style="width: 550px">
+        </table>
+        <div id="addThermostatModal" class="modal">
+            <div class="modal-content" style="height: 200px">
+                <span class="close" id="closeThermostatModal">&times;</span>
+                <table style="border: 1px">
+                    <th style="border: transparent">Nome termostato: </th>
+                    <td style="border: transparent">
+                        <input type="text" id="ThermostatName">
+                    </td>
+                </table>
+                <button type="submit" style="float: right" id="addThermostatSubmit">submit</button>  
+            </div>
+        </div>
+        <br>
+        <table align="center" style="border: 1px">
+            <th style="border: transparent">
+                <button id="out" class="button" style="width: 40%">temperatura attuale</button>
+            </th>
+        </table>
+        <br>
+        <div id="myModal" class="modal">
+            <div class="modal-content" style="height: 300px;">
+                <span class="close" id="closeModal">&times;</span>
+                <p id="temp"></p><br>
+            </div>
+        </div>
+        <table id="t01" align="center">
+            <tr>
+                <th colspan="8" align="center">TIME TABLE</th>
+            </tr>
+            <tr>
+                <th><div class="w3-container"><button class="w3-button w3-xlarge w3-circle w3-white" id="addTimeTable">+</button></div></th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+            <tr>
+                <th style="height: 300px">Hours</th>
+                <td style="height: 300px"><div style="background-color: #eee" id="mon" onclick="openModal()"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="tue" onclick="openModal()"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="wed" onclick="openModal()"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="thu" onclick="openModal()"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="fri" onclick="openModal()"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="sat" onclick="openModal()"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="sun" onclick="openModal()"></div></td>
+            </tr>
+        </table>
+        <div id="TimeTableModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="TimeTableClose">&times;</span>
+                <table style="border: 1px">
+                    <tr>
+                        <th colspan="2" align="left" style="border: transparent; font-size: 200%"><u>Pianifica termostato</u></th>
+                        <th style="border: transparent" id="DropdownList">
+                            <!-- menù a tendino dei termostati-->
+                        </th>
+
+                    </tr>
+                    <tr>
+                        <th style="width: 100px; border: transparent"></th>
+                        <th style="border: transparent">Da:</th>
+                        <th style="border: transparent">
+                            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">ore</a><br>
+                            <input id="oreI" type="number" min="0" max="23" step="1"><br>
+                        </th>
+                        <th style="border: transparent">
+                            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">minuti</a><br>
+                            <input id="minutiI" type="number" min="00" max="59" step="1"><br>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width: 100px; border: transparent"></th>
+                        <th style="border: transparent">a:</th>
+                        <th style="border: transparent">
+                            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">ore</a><br>
+                            <input id="oreF" type="number" min="0" max="23" step="1"><br>
+                        </th>
+                        <th style="border: transparent">
+                            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">minuti</a><br>
+                            <input id="minutiF" type="number" min="00" max="59" step="1"><br>
+                        </th>
+                    </tr>
+                </table>
+                <table style="border: 1px">
+                    <tr>
+                        <th style="border: transparent">
+                            <label class="container">Mon
+                                <input type="checkbox" id="monCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Tue
+                                <input type="checkbox" id="tueCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Wed
+                                <input type="checkbox" id="wedCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Thu
+                                <input type="checkbox" id="thuCheck"> 
+                                <span class="checkmark"></span>
+                            </label>
+                        </th> 
+                        <th style="border: transparent">
+                            <label class="container">Fri
+                                <input type="checkbox" id="friCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Sat
+                                <input type="checkbox" id="satCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Sun
+                                <input type="checkbox" id="sunCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                    </tr>
+                </table>
+                <button type="submit" style="float: right" id="TimeTableSubmit">submit</button>  
+            </div>
+        </div>
+        <br>
+        <div id="deleteModal" class="modal">
+            <div class="modal-content" style="height: 300px;">
+                <span class="close" id="closeDeleteModal">&times;</span>
+                <button type="submit" style="float: right" id="deleteSubmit">delete</button>
+            </div>
+        </div>
+    </body>
+    <script src="https://npmcdn.com/axios/dist/axios.min.js"></script>
+    <script>
+        var ThermostatTable = document.getElementById("ThermostatTable");
+        var addThermostat, temp = "";
+        axios.get("/initThermostat")
+            .then(function (response) {
+                console.log(response.data)
+                for (i in response.data) {
+                    if (response.data[i] != null) { 
+                        var name = response.data[i];
+                        var id = i;
+
+                        temp += "<option value=\"" + id + "\" id=\"" + id + "\">" + name + "</option>";
+                    }
+                }
+                document.getElementById("DropdownList").innerHTML = "<select id=\"ThermostatSelectModal\">" + temp + "</select>";
+                ThermostatTable.innerHTML = "<tr><th><select id=\"ThermostatSelect\">" + temp + "</select></th><th><div class=\"onoffswitch\"><input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" id=\"switch\"><label class=\"onoffswitch-label\" for=\"switch\"><span class=\"onoffswitch-inner\"></span><span class=\"onoffswitch-switch\"></span></label></div></th><th><a style=\"font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: white\">Temperatura desiderata</a><br><input id=\"temperatura\" type=\"number\" min=\"10\" max=\"40\" step=\"1\"><br></th><th id=\"delete\" onclick=\"deleteThermostat()\"><i class=\"fa fa-trash\" ></i></th></tr>";
+                ThermostatTable.innerHTML += "<tr><th colspan=\"4\"><div class=\"w3-container\"><button class=\"w3-button w3-xlarge w3-circle w3-grey\" id=\"addThermostat\">+</button></div></th></tr>"
+                addThermostat = document.getElementById("addThermostat");
+                addThermostat.onclick = function(e) {
+                    e.preventDefault();
+                    addThermostatModal.style.display = "block";
+                }
+
+                document.getElementById("ThermostatSelect").addEventListener("change", function () {
+                    axios.get("/getConfig?sw=" + this.value)
+                        .then(function (response) {
+                            console.log(response.data);
+                            document.getElementById("switch").value = response.data.data.switch;
+                            if (response.data.data.switch == 'true') {
+                               document.getElementById("switch").checked = true; 
+                            }
+                            else document.getElementById("switch").checked = false;
+                            document.getElementById("temperatura").value = parseInt(response.data.data.temperature, 10);
+                        })
+                })
+                document.getElementById("switch").addEventListener("change", function () {
+                    var sw = document.getElementById("ThermostatSelect").value;
+                    console.log(sw);
+                    var t = document.getElementById("temperatura").value;
+                    console.log(t);
+                    sendInput(this.checked, sw, t);
+                })
+            })
+            .catch(function (response) {
+                console.log(response)
+            })
+        
+        axios.get('/initTimeTable')
+            .then(function (response) {
+                console.log(response.data);
+                var days = response.data;
+                for (day in days) {
+                    for (i in day) {
+
+                    }
+                }
+            })
+
+        var btn = document.getElementById("out");
+        var modal = document.getElementById('myModal');
+        var span = document.getElementById("closeModal");
+
+        var addThermostatModal = document.getElementById("addThermostatModal");
+        var closeThermostatModal = document.getElementById("closeThermostatModal");
+        var addThermostatSubmit = document.getElementById("addThermostatSubmit");
+
+        var addTimeTable = document.getElementById("addTimeTable");
+        var TimeTableModal = document.getElementById("TimeTableModal");
+        var TimeTableSpan = document.getElementById("TimeTableClose");
+        var TimeTableSubmit = document.getElementById("TimeTableSubmit");
+
+        var mon = document.getElementById("monCheck");
+        var tue = document.getElementById("tueCheck");
+        var wed = document.getElementById("wedCheck");
+        var thu = document.getElementById("thuCheck");
+        var fri = document.getElementById("friCheck");
+        var sat = document.getElementById("satCheck");
+        var sun = document.getElementById("sunCheck");
+
+        function deleteThermostat() {
+            var sw = document.getElementById("ThermostatSelect").value;
+            console.log("deleting " + sw)
+            axios.get("/deleteThermostat?sw=" + sw)
+                .then(function (response) {
+                    console.log(response)
+                    location.reload();
+                })
+        }
+
+        function sendInput(check, sw, t) {
+            axios.get("/setRelay?checked=" + check + "&t=" + t + "&sw=" + sw)
+                .then(function (response) {
+                    console.log(response);
+                })
+        }
+
+        btn.onclick = function(e) {
+            e.preventDefault();
+            axios.get("/getTemp")
+                .then(function (response) {
+                    console.log(response.data)
+                    var temp = "";
+                    for (i in response.data) {
+                        temp += "<br><p>" + response.data[i].id + " : " + response.data[i].temp + "</p>";
+                    }
+                    document.getElementById("temp").innerHTML = "Temperature attuali: " + temp;
+                    modal.style.display = "block";
+                })
+                .catch(function (response) {
+                    document.getElementById("temp").innerText = "Error";
+                    console.log(response)
+                    modal.style.display = "block";
+                })
+        }
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        closeThermostatModal.onclick = function () {
+            addThermostatModal.style.display = "none";
+        }
+
+        addThermostatSubmit.onclick = function () {
+            var ThermostatName = document.getElementById("ThermostatName").value;
+            console.log(ThermostatName);
+            axios.get("/newThermostat?name=" + ThermostatName)
+                .then(function (response) {
+                    addThermostatModal.style.display = "none";
+                    location.reload();
+                })
+        }
+
+        addTimeTable.onclick = function (e) {
+            e.preventDefault();
+            TimeTableModal.style.display = "block";
+        }
+        TimeTableSpan.onclick = function () {
+            TimeTableModal.style.display = "none";
+        }
+        TimeTableSubmit.onclick = function () {
+            var t = document.getElementById("ThermostatSelectModal").value;
+            var start_h = document.getElementById("oreI").value;
+            var start_m = document.getElementById("minutiI").value;
+            var end_h = document.getElementById("oreF").value;
+            var end_m = document.getElementById("minutiF").value;
+
+            var url = '/updateTimeTable?mac=' + t + '&sh=' + start_h + '&sm=' + start_m + '&eh=' + end_h + '&em=' + end_m + '&mon=' + mon.checked + '&tue=' + tue.checked + '&wed=' + wed.checked + '&thu=' + thu.checked + '&fri=' + fri.checked + '&sat=' + sat.checked + '&sun=' + sun.checked;
+            console.log(url)
+            axios.get(url)
+                .then(function (response) {
+                    console.log(response);
+                })
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+
+            if (event.target == addThermostatModal) {
+                addThermostatModal.style.display = "none";
+            }
+
+            if (event.target == TimeTableModal) {
+                TimeTableModal.style.display = "none";
+            }
+        }
+    </script>
+</html>

@@ -1,0 +1,25 @@
+16:16:19.862 INFO  http: ip 192.168.192.4 on port 8080 
+16:17:20.453 DEBUG dati catturati Error: connect ECONNREFUSED 192.168.192.53:8080 
+16:17:20.516 DEBUG dati catturati Error: connect ECONNREFUSED 192.168.192.56:8080 
+16:17:23.403 DEBUG sending  
+16:17:52.445 INFO  http: ip 192.168.192.4 on port 8080 
+16:17:57.999 DEBUG dati catturati Error: connect ECONNREFUSED 192.168.192.56:8080 
+16:18:00.092 DEBUG dati catturati Error: Parse Error 
+16:18:00.782 DEBUG sending  
+16:18:31.375 DEBUG dati catturati Error: connect ECONNREFUSED 192.168.192.56:8080 
+16:18:33.559 DEBUG dati catturati Error: Parse Error 
+16:18:34.264 DEBUG sending  
+16:18:37.072 DEBUG dati catturati Error: connect ECONNREFUSED 192.168.192.56:8080 
+16:18:37.354 DEBUG dati catturati Error: connect ECONNREFUSED 192.168.192.56:8080 
+16:18:40.059 DEBUG sending  
+16:18:40.338 DEBUG sending  
+16:18:45.805 DEBUG dati catturati Error: Parse Error 
+16:18:58.056 DEBUG dati catturati Error: Parse Error 
+09:11:00.527 INFO  http: ip 192.168.192.4 on port 8080 
+09:14:03.227 DEBUG dati catturati Error: connect ECONNREFUSED 192.168.192.56:8080 
+09:14:05.967 DEBUG sending  
+09:14:12.993 DEBUG dati catturati Error: read ECONNRESET 
+09:16:13.323 DEBUG dati catturati Error: connect ETIMEDOUT 192.168.192.50:8080 
+16:59:39.161 INFO  http: ip 192.168.192.4 on port 8080 
+16:59:53.618 INFO  http: ip 192.168.192.4 on port 8080 
+17:00:00.418 INFO  http: ip 192.168.192.4 on port 8080 

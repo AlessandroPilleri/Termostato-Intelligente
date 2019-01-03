@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta name="viewpoint" content="width=device-width, initial-scale=1">
+    <style>
+            /* The container */
+            .container {
+                display: block;
+                position: relative;
+                padding-left: 35px;
+                margin-bottom: 12px;
+                cursor: pointer;
+                font-size: 22px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            
+            /* Hide the browser's default checkbox */
+            .container input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
+            
+            /* Create a custom checkbox */
+            .checkmark {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 25px;
+                width: 25px;
+                background-color: #ccc;
+            }
+            
+            /* On mouse-over, add a grey background color */
+            .container:hover input ~ .checkmark {
+                background-color: #aaa;
+            }
+            
+            /* When the checkbox is checked, add a blue background */
+            .container input:checked ~ .checkmark {
+                background-color: rgb(57, 180, 63);
+            }
+            
+            /* Create the checkmark/indicator (hidden when not checked) */
+            .checkmark:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+            
+            /* Show the checkmark when checked */
+            .container input:checked ~ .checkmark:after {
+                display: block;
+            }
+            
+            /* Style the checkmark/indicator */
+            .container .checkmark:after {
+                left: 9px;
+                top: 5px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+            </style>
+    <style>
+            div.sticky {
+                width: 100%;
+                position: -webkit-sticky;
+                position: sticky;
+                top: 0;
+                background-color: #808080;
+                padding: 30px;
+                font-size: 20px;
+		        z-index: 1;
+            }
+    </style>
+    <style>
+    * {
+    box-sizing: border-box;
+    }
+
+    .zoom {
+    padding: 50px;
+    transition: transform .2s;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    }
+
+    .zoom:hover {
+    -ms-transform: scale(2); /* IE 9 */
+    -webkit-transform: scale(2); /* Safari 3-8 */
+    transform: scale(2);
+    border: 1px solid black; 
+    }
+    </style>
+    <style>
+            .onoffswitch {
+        position: relative;
+        width: 79px;
+        float: right;
+    }
+    .onoffswitch-checkbox {
+        display: none;
+    }
+    .onoffswitch-label {
+        display: block; overflow: hidden; cursor: pointer;
+        border: 2px solid #999999; border-radius: 20px;
+    }
+    .onoffswitch-inner {
+        display: block; width: 200%; margin-left: -100%;
+        transition: margin 0.3s ease-in 0s;
+    }
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+        display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+        font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+        box-sizing: border-box;
+    }
+    .onoffswitch-inner:before {
+        content: "ON";
+        padding-left: 10px;
+        background-color: rgb(57, 180, 63); color: #FFFFFF;
+    }
+    .onoffswitch-inner:after {
+        content: "OFF";
+        padding-right: 10px;
+        background-color: #EEEEEE; color: #999999;
+        text-align: right;
+    }
+    .onoffswitch-switch {
+        display: block; width: 18px; margin: 6px;
+        background: #FFFFFF;
+        position: absolute; top: 0; bottom: 0;
+        right: 45px;
+        border: 2px solid #999999; border-radius: 20px;
+        transition: all 0.3s ease-in 0s; 
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+        margin-left: 0;
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+        right: 0px; 
+    }
+    </style>
+    <style>
+        .button {
+            padding: 15px 25px;
+            font-size: 24px;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            color: #fff;
+            background-color: rgb(57, 180, 63);
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px rgb(44, 104, 44);
+        }
+            
+        .button:hover {background-color: #4BB350}
+            
+        .button:active {
+            background-color: #4BB350;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+    </style>
+    <style>
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+        }
+        
+        .switch input {display:none;}
+        
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+        
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+        
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+    }
+
+        input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+          border-radius: 34px;
+        }
+
+        .slider.round:before {
+          border-radius: 50%;
+        }
+    </style>
+	<style>
+	    body {font-family: Arial, Helvetica, sans-serif;}
+	    .modal {
+		display: none;
+		position: fixed;
+		z-index: 1;
+		padding-top: 100px;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgb(0,0,0);
+		background-color: rgba(0,0,0,0.4);
+	    }
+	
+	    .modal-content {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%;
+        height: 440px;
+	    }
+
+	    .close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	    }
+
+	    .close:hover,
+	    .close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+	    }
+	</style>
+	<style>
+            table {
+                width: 90%;
+            }
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                width: 10%;
+                padding: 20px;
+                text-align: center;
+            }
+            table#t01 tr:nth-child(odd) {
+                background-color: #eee;
+            }
+            table#t01 tr:nth-child(even) {
+                background-color: #fff;
+            }
+            table#t01 th {
+                background-color: rgb(59, 59, 59);
+                color: white;
+            }
+        </style>
+    </head>
+    <body bgcolor="#808080">
+        <div class="sticky">
+    <center><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 250%; color: white"><u>Pannello di controllo termostato</u></a></center>
+        </div>
+        <br>
+        <table id="t01" align="center" style="width: 500px">
+        <tr><th style="width: 200px"><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: white">Termostato ufficio all'ingresso</a>
+            </th><td>
+            <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switchingresso">
+            <label class="onoffswitch-label" for="switchingresso">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        </td>
+        <td>
+            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">Temperatura desiderata</a><br>
+            <input id="temperaturaIngresso" type="number" min="10" max="40" step="1"><br>
+        </td>
+        <tr><th style="width: 200px"><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: white">Termostato secondo ufficio</a>
+            </th><td style="background-color: white">
+            <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switchsecondo">
+            <label class="onoffswitch-label" for="switchsecondo">
+               <span class="onoffswitch-inner"></span>
+               <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        </td>
+        <td style="background-color: white">
+            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">Temperatura desiderata</a><br>
+            <input id="temperaturaSecondo" type="number" min="10" max="40" step="1"><br>
+        </td>
+        <tr><th style="width: 200px"><a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: white">Termostato ufficio Marketing</a>
+            </th><td>
+            <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switchMarketing">
+            <label class="onoffswitch-label" for="switchMarketing">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        </td>
+        <td>
+            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">Temperatura desiderata</a><br>
+            <input id="temperaturaMarketing" type="number" min="10" max="40" step="1"><br>
+        </td>
+        </table>
+        <br>
+        <table align="center" style="border: 1px">
+            <th style="border: transparent">
+                <button id="out" class="button" style="width: 40%">temperatura attuale</button>
+            </th>
+        </table>
+        <br>
+	<div id="myModal" class="modal">
+	<div class="modal-content" style="height: 300px;">
+	    <span class="close" id="closeModal">&times;</span>
+        <p id="tempAtm"></p><br>
+        <p id="tempIngresso"></p><br>
+        <p id="tempSecondo"></p><br>
+        <p id="tempMarketing"></p><br>
+	</div>
+	</div>
+	<table id="t01" align="center">
+            <tr>
+                <th colspan="8" align="center">TIME TABLE</th>
+            </tr>
+            <tr>
+                <th><button type="button" id="addTimeTable">add</button></th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+            <tr>
+                <th style="height: 300px">Hours</th>
+                <td style="height: 300px"><div style="background-color: #eee" id="mon" onclick="openModal('mon')"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="tue" onclick="openModal('tue')"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="wed" onclick="openModal('wed')"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="thu" onclick="openModal('thu')"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="fri" onclick="openModal('fri')"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="sat" onclick="openModal('sat')"></div></td>
+                <td style="height: 300px"><div style="background-color: #eee" id="sun" onclick="openModal('sun')"></div></td>
+            </tr>
+        </table>
+        <div id="TimeTableModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="TimeTableclose">&times;</span>
+                <table style="border: 1px">
+                    <tr>
+                        <th colspan="2" align="left" style="border: transparent; font-size: 200%"><u>Pianifica termostato</u></th>
+                        <th style="border: transparent">
+                            <label class="container">ufficio all'ingresso
+                                <input type="checkbox" id="TimeTableIngresso">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">secondo ufficio
+                                <input type="checkbox" id="TimeTableSecondo">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">ufficio Marketing
+                                <input type="checkbox" id="TimeTableMarketing">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+
+                    </tr>
+                    <tr>
+                        <th style="width: 100px; border: transparent"></th>
+                        <th style="border: transparent">Da:</th>
+                        <th style="border: transparent">
+                            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">ore</a><br>
+                            <input id="oreI" type="number" min="0" max="23" step="1"><br>
+                        </th>
+                        <th style="border: transparent">
+                            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">minuti</a><br>
+                            <input id="minutiI" type="number" min="00" max="59" step="1"><br>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width: 100px; border: transparent"></th>
+                        <th style="border: transparent">a:</th>
+                        <th style="border: transparent">
+                            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">ore</a><br>
+                            <input id="oreF" type="number" min="0" max="23" step="1"><br>
+                        </th>
+                        <th style="border: transparent">
+                            <a style="font-family: Noto Sans,sans-serif; font-weight: bold; font-size: 100%; color: black">minuti</a><br>
+                            <input id="minutiF" type="number" min="00" max="59" step="1"><br>
+                        </th>
+                    </tr>
+                </table>
+                <table style="border: 1px">
+                    <tr>
+                        <th style="border: transparent">
+                            <label class="container">Mon
+                                <input type="checkbox" id="monCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Tue
+                                <input type="checkbox" id="tueCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Wed
+                                <input type="checkbox" id="wedCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Thu
+                                <input type="checkbox" id="thuCheck"> 
+                                <span class="checkmark"></span>
+                            </label>
+                        </th> 
+                        <th style="border: transparent">
+                            <label class="container">Fri
+                                <input type="checkbox" id="friCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Sat
+                                <input type="checkbox" id="satCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="border: transparent">
+                            <label class="container">Sun
+                                <input type="checkbox" id="sunCheck">
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                    </tr>
+                </table>
+                <button type="submit" style="float: right" id="TimeTableSubmit">submit</button>  
+            </div>
+        </div>
+        <br>
+        <div id="deleteModal" class="modal">
+            <div class="modal-content" style="height: 300px;">
+                <span class="close" id="closeDeleteModal">&times;</span>
+                <button type="submit" style="float: right" id="deleteSubmit">delete</button>
+            </div>
+        </div>
+        <script src="https://npmcdn.com/axios/dist/axios.min.js"></script>
+
+        <script>
+            function fillTimeTable() {
+                axios.get('/initTimeTable')
+                    .then(function (response) {
+                        console.log(response.data); 
+                        var days = response.data;
+                        Object.keys(days).forEach(function (key) {
+                            days[key].forEach(function (item, index, array) {
+                                if (item.sw == 0) {
+                                    var thermostat = 'ufficio all\'ingresso';
+                                }
+                                if (item.sw == 1) {
+                                    var thermostat = 'secondo ufficio';
+                                }
+                                if (item.sw == 2) {
+                                    var thermostat = 'ufficio Marketing';
+                                }
+                                document.getElementById(key).innerHTML += '<br><p>' + thermostat + ': da ' + item.inizio.ore + ':' + item.inizio.minuti + ' alle ' + item.fine.ore + ':' + item.fine.minuti + '</p>';
+                            })
+                        });
+                    })
+            }
+	        var modal = document.getElementById('myModal');
+	        var btn = document.getElementById("out");
+            var span = document.getElementById("closeModal");
+
+            var mon = document.getElementById("monCheck");
+            var tue = document.getElementById("tueCheck");
+            var wed = document.getElementById("wedCheck");
+            var thu = document.getElementById("thuCheck");
+            var fri = document.getElementById("friCheck");
+            var sat = document.getElementById("satCheck");
+            var sun = document.getElementById("sunCheck");
+
+            var divMon = document.getElementById("mon");
+            var divTue = document.getElementById("tue");
+            var divWed = document.getElementById("wed");
+            var divThu = document.getElementById("thu");
+            var divFri = document.getElementById("fri");
+            var divSat = document.getElementById("sat");
+            var divSun = document.getElementById("sun");
+            var deleteModal = document.getElementById("deleteModal");
+            var closeDeleteModal = document.getElementById("closeDeleteModal");
+            var deleteSubmit = document.getElementById("deleteSubmit");
+
+            var oreInizio = document.getElementById("oreI").value;
+            var minutiInizio = document.getElementById("minutiI").value;
+            var oreFine = document.getElementById("oreF").value;
+            var minutiFine = document.getElementById("minutiF").value;
+
+            var TimeTableIngresso = document.getElementById("TimeTableIngresso");
+            var TimeTableSecondo = document.getElementById("TimeTableSecondo");
+            var TimeTableMarketing = document.getElementById("TimeTableMarketing");
+
+            var TimeTableModal = document.getElementById("TimeTableModal");
+            var TimeTableButton = document.getElementById("addTimeTable");
+            var TimeTableSpan = document.getElementById("TimeTableclose");
+            var TimeTableSubmit = document.getElementById("TimeTableSubmit");
+
+            var tIngresso = document.getElementById("temperaturaIngresso").value;
+            var tSecondo = document.getElementById("temperaturaSecondo").value;
+            var tMarketing = document.getElementById("temperaturaMarketing").value;
+            var switchingresso = document.getElementById("switchingresso");
+            var switchsecondo = document.getElementById("switchsecondo");
+            var switchMarketing = document.getElementById("switchMarketing");
+
+            fillTimeTable();
+
+            switchingresso.addEventListener("change", function () {
+                tIngresso = document.getElementById("temperaturaIngresso").value;
+                sendInput(this.checked, 0, tIngresso);
+            });
+            switchsecondo.addEventListener("change", function () {
+                tSecondo = document.getElementById("temperaturaSecondo").value;
+                sendInput(this.checked, 1, tSecondo);
+            });
+            switchMarketing.addEventListener("change", function () {
+                tMarketing = document.getElementById("temperaturaMarketing").value;
+                sendInput(this.checked, 2, tMarketing)
+            })
+            function sendInput(check, sw, t) {
+                console.log('checkbox: ' + check + ' t: ' + t);
+                axios.post('/checkbox?checked=' + check + '&t=' + t + '&sw=' + sw)
+            }
+
+            btn.onclick = function(e) {
+		        e.preventDefault();
+                axios.get('/getTemperatura', {
+                    })
+                    .then(function (response) {
+                        console.log(response.data)
+                        document.getElementById('tempAtm').innerText = "Temperatura attuale";
+                        document.getElementById('tempIngresso').innerText = "ufficio all'ingresso: " + response.data[0];
+                        document.getElementById('tempSecondo').innerText = "secondo ufficio:" + response.data[1];
+                        document.getElementById('tempMarketing').innerText = "ufficio Marketing: " + response.data[2];
+                        modal.style.display = "block";
+                    })
+                    .catch(function (response) {
+                        document.getElementById('tempAtm').innerText = "error";
+                        modal.style.display = "block";
+                    })
+	        }
+   	        span.onclick = function () {
+                modal.style.display = "none";
+	         }
+            
+            TimeTableSubmit.onclick = function (e) {
+                e.preventDefault();
+                oreInizio = document.getElementById("oreI").value;
+                minutiInizio = document.getElementById("minutiI").value;
+                oreFine = document.getElementById("oreF").value;
+                minutiFile = document.getElementById("minutiF").value;
+                mon = document.getElementById("monCheck");
+                tue = document.getElementById("tueCheck");
+                wed = document.getElementById("wedCheck");
+                thu = document.getElementById("thuCheck");
+                fri = document.getElementById("friCheck");
+                sat = document.getElementById("satCheck");
+                sun = document.getElementById("sunCheck");
+                TimeTableIngresso = document.getElementById("TimeTableIngresso");
+                TimeTableSecondo = document.getElementById("TimeTableSecondo");
+                TimeTableMarketing = document.getElementById("TimeTableMarketing");
+
+                var swIngresso = false;
+                var swSecondo = false;
+                var swMarketing = false;
+                if (TimeTableIngresso.checked) {
+                    swIngresso = true;
+                }
+                if (TimeTableSecondo.checked) {
+                    swSecondo = true;
+                }
+                if (TimeTableMarketing.checked) {
+                    swMarketing = true;
+                }
+                console.log(sw)
+
+                axios.post('/updateTimeTable?mon=' + mon.checked + '&tue=' + tue.checked + '&wed=' + wed.checked + '&thu=' + thu.checked + '&fri=' + fri.checked + '&sat=' + sat.checked + '&sun=' + sun.checked + '&oreI=' + oreInizio + '&minutiI=' + minutiInizio + '&oreF=' + oreFine + '&minutiF=' + minutiFine + "&sw0=" + swIngresso + "&sw1=" + swSecondo + "&sw2=" + swMarketing)
+                    .then(function (response) {
+                        console.log(response.data)
+                            if (mon.checked) {
+                                if (swIngresso == true) {
+                                    var thermostat = 'ufficio all\'ingresso';
+                                    document.getElementById("mon").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                            }
+                                if (swSecondo == true) {
+                                    var thermostat = 'secondo ufficio';
+                                    document.getElementById("mon").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swMarketing == true) {
+                                    var thermostat = 'ufficio Marketing';
+                                    document.getElementById("mon").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                            }
+                            if (tue.checked) {
+                                if (swIngresso == true) {
+                                    var thermostat = 'ufficio all\'ingresso';
+                                    document.getElementById("tue").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swSecondo == true) {
+                                    var thermostat = 'secondo ufficio';
+                                    document.getElementById("tue").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swMarketing == true) {
+                                    var thermostat = 'ufficio Marketing';
+                                    document.getElementById("tue").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                            }
+                            if (wed.checked) {
+                                if (swIngresso == true) {
+                                    var thermostat = 'ufficio all\'ingresso';
+                                    document.getElementById("wed").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swSecondo == true) {
+                                    var thermostat = 'secondo ufficio';
+                                    document.getElementById("wed").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swMarketing == true) {
+                                    var thermostat = 'ufficio Marketing';
+                                    document.getElementById("wed").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }                            
+                            }
+                            if (thu.checked) {
+                                if (swIngresso == true) {
+                                var thermostat = 'ufficio all\'ingresso';
+                                document.getElementById("thu").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swSecondo == true) {
+                                    var thermostat = 'secondo ufficio';
+                                    document.getElementById("thu").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swMarketing == true) {
+                                    var thermostat = 'ufficio Marketing';
+                                    document.getElementById("thu").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                            }
+                            if (fri.checked) {
+                                if (swIngresso == true) {
+                                    var thermostat = 'ufficio all\'ingresso';
+                                    document.getElementById("fri").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swSecondo == true) {
+                                    var thermostat = 'secondo ufficio';
+                                    document.getElementById("fri").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swMarketing == true) {
+                                    var thermostat = 'ufficio Marketing';
+                                    document.getElementById("fri").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                            }
+                            if (sat.checked) {
+                                if (swIngresso == true) {
+                                    var thermostat = 'ufficio all\'ingresso';
+                                    document.getElementById("sat").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swSecondo == true) {
+                                    var thermostat = 'secondo ufficio';
+                                    document.getElementById("sat").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swMarketing == true) {
+                                    var thermostat = 'ufficio Marketing';
+                                    document.getElementById("sat").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                            }
+                            if (sun.checked) {
+                                if (swIngresso == true) {
+                                    var thermostat = 'ufficio all\'ingresso';
+                                    document.getElementById("sun").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swSecondo == true) {
+                                    var thermostat = 'secondo ufficio';
+                                    document.getElementById("sun").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                                if (swMarketing == true) {
+                                    var thermostat = 'ufficio Marketing';
+                                    document.getElementById("sun").innerHTML += '<br><p>' + thermostat + ': da ' + oreInizio + ':' + minutiInizio + ' alle ' + oreFine + ':' + minutiFine + '</p>'
+                                }
+                            }
+                            TimeTableModal.style.display = "none";
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                        alert('error');
+                    })
+            }
+            TimeTableButton.onclick = function(e) {
+                e.preventDefault();
+                TimeTableModal.style.display = "block";
+            }
+            TimeTableSpan.onclick = function () {
+                TimeTableModal.style.display = "none";
+            }
+
+            function openModal (id) {
+                deleteModal.style.display = "block";
+                axios.post('/getGiorno?id=' + id)
+                    .then(function (response) {
+                        var day = response.data;
+                        
+                    })
+            }
+            closeDeleteModal.onclick = function () {
+                deleteModal.style.display = "none"
+            }
+            window.onclick = function (event) {
+            }
+            
+            window.onclick = function(event) {
+	        	if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+                if (event.target == TimeTableModal) {
+                    TimeTableModal.style.display = "none";
+                }
+                if (event.target == deleteModal) {
+                    deleteModal.style.display = "none";
+                }
+            }
+        </script>
+    </body>
+</html>
